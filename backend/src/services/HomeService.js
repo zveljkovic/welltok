@@ -6,7 +6,6 @@ class HomeService {
         const quote = randomQuotes.default();
         return {
             status: 'OK',
-            config: AppConfig.DbConfig,
             quote: quote.body.replace('"', '\'') + ' - ' + quote.author,
         };
     }

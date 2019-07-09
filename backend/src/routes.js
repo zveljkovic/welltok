@@ -1,4 +1,5 @@
 const {HomeController} = require('./controllers/HomeController');
+const {BookController} = require('./controllers/BookController');
 
 function setupRoutes(server) {
     const homeController = new HomeController();
@@ -7,6 +8,9 @@ function setupRoutes(server) {
         method: 'GET',
         handler: homeController.home
     });
+
+    const bookController = new BookController();
+    bookController.setupRoutes(server);
 }
 
 module.exports.setupRoutes = setupRoutes;

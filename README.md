@@ -23,3 +23,4 @@ TA01: Initialize base frontend and backend projects within Docker containers
 TA02: Setup backend dev environment with auto reload
 TA03: Create backend configuration
 TA04: Create backend database models, seeds, and migrations
+TA05: Create backend CRUD
