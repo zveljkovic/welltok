@@ -16,4 +16,4 @@ For both backend and frontend apps go into respective folder and run `npm instal
 # Task list 
 TA01: Initialize base frontend and backend projects within Docker containers  
 TA02: Setup backend dev environment with auto reload
-
+TA03: Create backend configuration
