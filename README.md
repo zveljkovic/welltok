@@ -14,5 +14,6 @@ required modules.
 For both backend and frontend apps go into respective folder and run `npm install` and `npm run start`
 
 # Task list 
-TA01: Initialize base frontend and backend projects within Docker containers
+TA01: Initialize base frontend and backend projects within Docker containers  
+TA02: Setup backend dev environment with auto reload
 

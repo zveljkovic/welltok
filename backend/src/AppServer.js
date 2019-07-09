@@ -1,4 +1,5 @@
 const {Server} = require('@hapi/hapi');
+const {setupRoutes} = require('./routes');
 
 const AppServer = class AppServer {
     /** @var {Server} server */
@@ -9,6 +10,7 @@ const AppServer = class AppServer {
             port: 3030,
             host: '0.0.0.0',
         });
+        setupRoutes(this.server);
     }
 
     /**

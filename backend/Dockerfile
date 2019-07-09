@@ -8,4 +8,4 @@ VOLUME /home/node/backend/node_modules
 WORKDIR /home/node/backend
 
 # Start app
-CMD npm install && npm run start
+CMD npm install && npm run docker-dev
