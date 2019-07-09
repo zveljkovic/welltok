@@ -1,0 +1,32 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3030:3030"
+      - "9229:9229"
+    volumes:
+      - ./backend:/home/node/backend
+      - ./backend/dev_node_modules:/home/node/backend/node_modules
+    links:
+      - postgres
+    environment:
+      POSTGRES_HOST: postgres
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/home/node/frontend
+      - ./frontend/dev_node_modules:/home/node/frontend/node_modules
+    links:
+      - backend
+      - postgres
+  postgres:
+    build: ./database
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_USER: welltok_dev
+      POSTGRES_PASSWORD: welltok_dev
+      POSTGRES_DB: welltok_dev
