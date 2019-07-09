@@ -13,7 +13,13 @@ required modules.
 # Alternative start
 For both backend and frontend apps go into respective folder and run `npm install` and `npm run start`
 
+# Initialize Database
+Run backend container with `docker-compose up backend` if not already started.  
+In other terminal run `docker-compose exec backend npm run db:migrate` to create necessary database structure and
+run `docker-compose exec backend npm run db:seed:all` to import data from CSV file.
+
 # Task list 
 TA01: Initialize base frontend and backend projects within Docker containers  
 TA02: Setup backend dev environment with auto reload
 TA03: Create backend configuration
+TA04: Create backend database models, seeds, and migrations
