@@ -12,6 +12,11 @@ const AppServer = class AppServer {
         this.server = new Server({
             port: 3030,
             host: '0.0.0.0',
+            routes: {
+                cors: {
+                    origin: ['*'],
+                },
+            },
         });
         // Before each request create request specific container
         this.server.ext([

@@ -96,7 +96,11 @@ class BookController {
     };
 
     create = async (request, h) => {
-        return this.service.create(request.payload);
+        try {
+            return await this.service.create(request.payload)
+        } catch (e) {
+           return  e;
+        }
     };
 
     update = async (request, h) => {

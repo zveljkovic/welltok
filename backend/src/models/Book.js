@@ -5,7 +5,7 @@ class Book extends Sequelize.Model {
 
 }
 Book.init({
-  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
+  id: { type: Sequelize.INTEGER, primaryKey: true,  autoIncrement: true},
   title: { type: Sequelize.STRING, allowNull: false},
   description: { type: Sequelize.TEXT, allowNull: false},
   author: { type: Sequelize.STRING, allowNull: false},

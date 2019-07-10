@@ -37,3 +37,4 @@ TA04: Create backend database models, seeds, and migrations
 TA05: Create backend CRUD  
 TA06: Implement IoC  
 TA07: Setup Tests  
+TA08: Create frontend crud screens
