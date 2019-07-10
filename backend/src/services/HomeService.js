@@ -1,5 +1,4 @@
 const randomQuotes = require('random-quotes');
-const {AppConfig} = require('../helpers/AppConfig');
 
 class HomeService {
     async home() {

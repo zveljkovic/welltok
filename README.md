@@ -24,3 +24,4 @@ TA02: Setup backend dev environment with auto reload
 TA03: Create backend configuration
 TA04: Create backend database models, seeds, and migrations
 TA05: Create backend CRUD
+TA06: Implement IoC 

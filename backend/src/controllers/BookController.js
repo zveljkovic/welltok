@@ -2,9 +2,11 @@ const {BookService} = require('../services/BookService');
 const joi = require('@hapi/joi');
 
 class BookController {
-    service = null;
-    constructor() {
-        this.service = new BookService();
+    /**
+     * @param {BookService} service
+     */
+    constructor(service) {
+        this.service = service;
     }
 
     setupRoutes = (server) => {
@@ -35,7 +37,7 @@ class BookController {
                         title: joi.string().required(),
                         description: joi.string().required(),
                         author: joi.string().required(),
-                        tags: joi.array().items(Joi.string()).required(),
+                        tags: joi.array().items(joi.string()).required(),
                     })
                 }
             }
@@ -53,7 +55,7 @@ class BookController {
                         title: joi.string().required(),
                         description: joi.string().required(),
                         author: joi.string().required(),
-                        tags: joi.array().items(Joi.string()).required(),
+                        tags: joi.array().items(joi.string()).required(),
                     })
                 }
             }

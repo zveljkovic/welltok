@@ -1,16 +1,17 @@
 const {Server} = require('@hapi/hapi');
-const {setupRoutes} = require('./routes');
 
 const AppServer = class AppServer {
     /** @var {Server} server */
     server = null;
 
-    constructor() {
+    constructor(homeController, bookController) {
         this.server = new Server({
             port: 3030,
             host: '0.0.0.0',
         });
-        setupRoutes(this.server);
+
+        homeController.setupRoutes(this.server);
+        bookController.setupRoutes(this.server);
     }
 
     /**

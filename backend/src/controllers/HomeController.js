@@ -1,10 +1,19 @@
-const {HomeService} = require('../services/HomeService');
-
 class HomeController {
-    service = null;
-    constructor() {
-        this.service = new HomeService();
+    /**
+     * @param {HomeService} service
+     */
+    constructor(service) {
+        this.service = service;
     }
+
+    setupRoutes = (server) => {
+        server.route({
+            path: '/',
+            method: 'GET',
+            handler: this.home
+        });
+    };
+
     home = async (request, h) => {
         return this.service.home();
     }
