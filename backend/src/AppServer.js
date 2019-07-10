@@ -1,15 +1,27 @@
 const {Server} = require('@hapi/hapi');
 
 const AppServer = class AppServer {
-    /** @var {Server} server */
     server = null;
 
-    constructor(homeController, bookController) {
+    /**
+     * @param {CreateRequestContainer} createRequestContainer
+     * @param {HomeController} homeController
+     * @param {BookController} bookController
+     */
+    constructor(createRequestContainer, homeController, bookController) {
         this.server = new Server({
             port: 3030,
             host: '0.0.0.0',
         });
-
+        // Before each request create request specific container
+        this.server.ext([
+            {
+                type: 'onRequest',
+                method: [
+                    createRequestContainer.onRequest,
+                ],
+            }
+        ]);
         homeController.setupRoutes(this.server);
         bookController.setupRoutes(this.server);
     }
@@ -27,6 +39,14 @@ const AppServer = class AppServer {
      */
     async stop() {
         await this.server.stop();
+    }
+
+    /**
+     * @param {ServerInjectOptions} options
+     * @returns Promise<ServerInjectResponse>
+     */
+    async inject(options) {
+        return this.server.inject(options);
     }
 };
 

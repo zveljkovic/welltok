@@ -9,13 +9,15 @@
     "db:migrate": "NODE_ENV=dev sequelize db:migrate",
     "db:seed:all": "NODE_ENV=dev sequelize db:seed:all",
     "db:seed:undo:all": "sequelize db:seed:undo:all",
-    "db:migrate:test": "sequelize db:migrate"
+    "db:migrate:test": "NODE_ENV=test sequelize db:migrate",
+    "test": "NODE_ENV=test mocha --harmony --recursive"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^18.3.1",
     "@hapi/joi": "^15.1.0",
+    "chai-subset": "^1.6.0",
     "config": "^3.1.0",
     "csv": "^5.1.1",
     "inversify": "^5.0.1",

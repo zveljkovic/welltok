@@ -1,0 +1,4 @@
+--ui bdd
+--reporter dot
+--timeout 0
+--require test/src/setup.js

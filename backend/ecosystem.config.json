@@ -22,5 +22,19 @@
       "usePolling": true,
       "alwaysStat": true
     }
+  }, {
+    "name": "WelltokTest",
+    "autorestart": false,
+    "env": {
+      "NODE_ENV": "test"
+    },
+    "kill_timeout": 300,
+    "exec_mode": "fork",
+    "instance_var": "INSTANCE_ID",
+    "instances": 1,
+    "max_memory_restart": "1G",
+    "max_restarts": 1,
+    "min_uptime": 10000,
+    "script": "mocha --harmony --recursive"
   }]
 }

@@ -9,16 +9,23 @@ class BookController {
         this.service = service;
     }
 
+    // When using TypeScript all of these configs can be hidden behind decorators
+    // When using IoC we need to instantiate new Controller per request to be able
+    // to have some request specific data bound by using IoC
     setupRoutes = (server) => {
         server.route({
             path: '/book',
             method: 'GET',
-            handler: this.getAll
+            handler: function(request, h) {
+                return request.app.requestContainer.get(BookController).getAll(request, h);
+            }
         });
         server.route({
             path: '/book/{id}',
             method: 'GET',
-            handler: this.getById,
+            handler: function(request, h) {
+                return request.app.requestContainer.get(BookController).getById(request, h);
+            },
             options: {
                 validate: {
                     params: joi.object().keys({
@@ -30,7 +37,9 @@ class BookController {
         server.route({
             path: '/book',
             method: 'POST',
-            handler: this.create,
+            handler: function(request, h) {
+                return request.app.requestContainer.get(BookController).create(request, h);
+            },
             options: {
                 validate: {
                     payload: joi.object().keys({
@@ -45,7 +54,9 @@ class BookController {
         server.route({
             path: '/book/{id}',
             method: 'PATCH',
-            handler: this.update,
+            handler: function(request, h) {
+                return request.app.requestContainer.get(BookController).update(request, h);
+            },
             options: {
                 validate: {
                     params: joi.object().keys({
@@ -63,7 +74,9 @@ class BookController {
         server.route({
             path: '/book/{id}',
             method: 'DELETE',
-            handler: this.delete,
+            handler: function(request, h) {
+                return request.app.requestContainer.get(BookController).delete(request, h);
+            },
             options: {
                 validate: {
                     params: joi.object().keys({
