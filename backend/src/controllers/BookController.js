@@ -1,5 +1,6 @@
-const {BookService} = require('../services/BookService');
 const joi = require('@hapi/joi');
+const {BookService} = require('../services/BookService');
+const {Auth} = require('../init/Auth');
 
 class BookController {
     /**
@@ -48,8 +49,13 @@ class BookController {
                         author: joi.string().required(),
                         tags: joi.array().items(joi.string()).required(),
                     })
-                }
-            }
+                },
+                auth: {
+                    mode: 'required',
+                    strategy: Auth.strategyName,
+                    scope: ['admin'],
+                },
+            },
         });
         server.route({
             path: '/book/{id}',
@@ -68,7 +74,12 @@ class BookController {
                         author: joi.string().required(),
                         tags: joi.array().items(joi.string()).required(),
                     })
-                }
+                },
+                auth: {
+                    mode: 'required',
+                    strategy: Auth.strategyName,
+                    scope: ['admin'],
+                },
             }
         });
         server.route({
@@ -82,7 +93,12 @@ class BookController {
                     params: joi.object().keys({
                         id: joi.number().min(0).required()
                     }),
-                }
+                },
+                auth: {
+                    mode: 'required',
+                    strategy: Auth.strategyName,
+                    scope: ['admin'],
+                },
             }
         });
     };

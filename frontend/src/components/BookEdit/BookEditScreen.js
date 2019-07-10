@@ -29,7 +29,7 @@ class BookEditScreen extends Component {
     }
 
     componentDidMount() {
-        BookApi.getById(this.bookId).then((value => {
+        new BookApi(this.props.auth.token).getById(this.bookId).then((value => {
             if (value.status === 'ok') {
                 value.data.tags = value.data.tags.map( (t) => {
                     return {label: t, value: t}
@@ -55,7 +55,7 @@ class BookEditScreen extends Component {
             return;
         }
 
-        const response = await BookApi.update(this.bookId, {
+        const response = await new BookApi(this.props.auth.token).update(this.bookId, {
             title: this.state.title,
             description: this.state.description,
             author: this.state.author,
@@ -194,4 +194,7 @@ class BookEditScreen extends Component {
     }
 }
 
-export default connect()(BookEditScreen);
+const mapStateToProps = (state, ownProps) => {
+    return {auth: state.auth};
+};
+export default connect(mapStateToProps)(BookEditScreen);

@@ -38,3 +38,4 @@ TA05: Create backend CRUD
 TA06: Implement IoC  
 TA07: Setup Tests  
 TA08: Create frontend crud screens
+TA09: Create Auth functionality

@@ -6,5 +6,6 @@ module.exports = {
         "username": "welltok_dev",
         "password": "welltok_dev",
         "database": "welltok_dev"
-    }
+    },
+    JwtSecret: 'some-random-secret-that-would-come-from-config'
 };

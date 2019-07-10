@@ -1,8 +1,16 @@
 const sinon = require('sinon');
 const {container} = require('../../src/container');
 const {AppServer} = require('../../src/AppServer');
+const {Auth} = require('../../src/init/Auth');
 const {BookService} = require('../../src/services/BookService');
 const expect = require('chai').expect;
+
+const adminAuth = {
+    credentials: {
+        scope: ['admin'],
+    },
+    strategy: Auth.strategyName,
+};
 
 describe('BookController', () => {
     const serviceObj = {
@@ -79,7 +87,8 @@ describe('BookController', () => {
             await appServer.inject({
                 url: '/book',
                 method: 'post',
-                payload: data
+                payload: data,
+                auth: adminAuth,
             });
             mock.verify();
         });
@@ -97,7 +106,8 @@ describe('BookController', () => {
             await appServer.inject({
                 url: '/book/1122',
                 method: 'patch',
-                payload: data
+                payload: data,
+                auth: adminAuth,
             });
             mock.verify();
         });
@@ -108,7 +118,8 @@ describe('BookController', () => {
             mock.expects('delete').once().withArgs(1122).callThrough();
             await appServer.inject({
                 url: '/book/1122',
-                method: 'delete'
+                method: 'delete',
+                auth: adminAuth,
             });
             mock.verify();
         });

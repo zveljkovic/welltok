@@ -40,7 +40,7 @@ class BookCreateScreen extends Component {
             return;
         }
         this.setState({spinner: true});
-        const response = await BookApi.create({
+        const response = await new BookApi(this.props.auth.token).create({
                 title: this.state.title,
                 description: this.state.description,
                 author: this.state.author,
@@ -181,5 +181,7 @@ class BookCreateScreen extends Component {
         );
     }
 }
-
-export default connect()(BookCreateScreen);
+const mapStateToProps = (state, ownProps) => {
+    return {auth: state.auth};
+};
+export default connect(mapStateToProps)(BookCreateScreen);

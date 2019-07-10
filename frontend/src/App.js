@@ -7,7 +7,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink, FormGroup, Label, Input, Form, ModalHeader, Modal, ModalBody, ModalFooter, Button,
+  NavLink, FormGroup, Label, Input, Form, ModalHeader, Modal, ModalBody, ModalFooter, Button, Alert,
 } from 'reactstrap';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { connect } from 'react-redux';
@@ -15,6 +15,8 @@ import BookListScreen from "./components/BookList/BookListScreen";
 import BookEditScreen from "./components/BookEdit/BookEditScreen";
 import BookCreateScreen from "./components/BookCreate/BookCreateScreen";
 import BookDeleteScreen from "./components/BookDelete/BookDeleteScreen";
+import {AuthApi} from "./libraries/AuthApi";
+import {storeAuthToken} from "./redux/actions";
 
 class App extends React.Component {
   constructor(props) {
@@ -24,6 +26,7 @@ class App extends React.Component {
       showLogin: false,
       username: '',
       password: '',
+      loginErrorMessage: null,
     };
   }
 
@@ -40,16 +43,31 @@ class App extends React.Component {
     this.setState({showLogin: !this.state.showLogin});
   };
 
-  login = () => {
-
+  login = async () => {
+    const response = await AuthApi.login(this.state.username, this.state.password);
+    if (response.status !== 'ok') {
+      this.setState({loginErrorMessage: response.errorMessage})
+      return;
+    }
+    this.props.storeAuthToken(response.token);
+    this.toggleLogin();
   };
+  logout = async () => {
+    this.props.storeAuthToken(null);
+  };
+
   handleChange = async (event) => {
     const { name, value } = event.target;
     await this.setState({
       [ name ]: value,
     });
   };
+
   render() {
+    let authLink = this.props.auth.userId === null ?
+        <NavLink onClick={() => { this.showLogin(); }}>Login</NavLink> :
+        <NavLink onClick={() => { this.logout(); }}>Logout</NavLink>;
+
     return  <div className="App">
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">Zlatibor Veljkovic</NavbarBrand>
@@ -57,9 +75,7 @@ class App extends React.Component {
         <Collapse isOpen={this.state.collapsed} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink onClick={() => {
-                this.showLogin();
-              }}>Login</NavLink>
+              {authLink}
             </NavItem>
           </Nav>
         </Collapse>
@@ -68,6 +84,11 @@ class App extends React.Component {
         <ModalHeader toggle={this.toggleLogin}>Login</ModalHeader>
         <ModalBody>
           <p>Please use admin/admin to login</p>
+          {this.state.loginErrorMessage &&
+          <Alert color="danger" fade="true">
+            {this.state.loginErrorMessage}
+          </Alert>
+          }
           <Form>
             <FormGroup>
               <Label for="username">Username</Label>
@@ -95,5 +116,8 @@ class App extends React.Component {
     </div>;
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {auth: state.auth};
+};
 
-export default connect()(App);
+export default connect(mapStateToProps, {storeAuthToken})(App);

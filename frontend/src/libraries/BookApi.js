@@ -1,45 +1,54 @@
 import * as axios from 'axios';
 
 export class BookApi {
-    static async fetchAllBooks(){
+    constructor(token) {
+        this.token = token;
+        this.http = axios.create({
+            baseURL: 'http://localhost:3030',
+            timeout: 1000,
+            headers: {'Authorization': `Bearer ${token}`}
+        });
+    }
+
+    async fetchAllBooks(){
         try {
-            const response = await axios.get('http://localhost:3030/book');
+            const response = await this.http.get('/book');
             return {status: 'ok', data: response.data};
         } catch (e) {
             return {status: 'error', errorMessage: 'Failed getting list of books'};
         }
     }
 
-    static async getById(id){
+    async getById(id){
         try {
-            const response = await axios.get(`http://localhost:3030/book/${id}`);
+            const response = await this.http.get(`/book/${id}`);
             return {status: 'ok', data: response.data};
         } catch (e) {
             return {status: 'error', errorMessage: 'Failed getting book by id'};
         }
     }
 
-    static async update(id, data){
+    async update(id, data){
         try {
-            const response = await axios.patch(`http://localhost:3030/book/${id}`, data);
+            const response = await this.http.patch(`/book/${id}`, data);
             return {status: 'ok', data: response.data};
         } catch (e) {
             return {status: 'error', errorMessage: 'Failed updating book'};
         }
     }
 
-    static async create(data){
+    async create(data){
         try {
-            const response = await axios.post(`http://localhost:3030/book`, data);
+            const response = await this.http.post(`/book`, data);
             return {status: 'ok', data: response.data};
         } catch (e) {
             return {status: 'error', errorMessage: 'Failed updating book'};
         }
     }
 
-    static async delete(id){
+    async delete(id){
         try {
-            const response = await axios.delete(`http://localhost:3030/book/${id}`);
+            const response = await this.http.delete(`/book/${id}`);
             return {status: 'ok', data: response.data};
         } catch (e) {
             return {status: 'error', errorMessage: 'Failed deleting book'};

@@ -17,7 +17,7 @@ class BookDeleteScreen extends Component {
     }
 
     componentDidMount() {
-        BookApi.getById(this.bookId).then((value => {
+        new BookApi(this.props.auth.token).getById(this.bookId).then((value => {
             if (value.status === 'ok') {
                 this.setState({book: value.data, spinner: false});
                 return;
@@ -27,7 +27,7 @@ class BookDeleteScreen extends Component {
     }
 
     delete = async () => {
-        const response = await BookApi.delete(this.bookId);
+        const response = await new BookApi(this.props.auth.token).delete(this.bookId);
         if (response.status === 'ok') {
             this.setState({redirectToHome: true});
             return;
@@ -63,4 +63,7 @@ class BookDeleteScreen extends Component {
     }
 }
 
-export default connect()(BookDeleteScreen);
+const mapStateToProps = (state, ownProps) => {
+    return {auth: state.auth};
+};
+export default connect(mapStateToProps)(BookDeleteScreen);
